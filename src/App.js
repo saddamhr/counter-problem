@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+
+import BtbCard from './components/BtbCard';
 
 function App() {
+  const [btns, setBtns] = useState([
+    { id: 1, name: 'BTN1', value: 0 },
+    { id: 1, name: 'BTN2', value: 0 },
+    { id: 1, name: 'BTN3', value: 0 },
+  ]);
+
+  const addHandler = (index) => {
+    const tempArray = [...btns];
+    tempArray[index].value = tempArray[index].value + 1;
+    setBtns([...tempArray]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {btns.map((bt, i) => (
+        <BtbCard bt={bt} addHandler={(e) => addHandler(i)} />
+      ))}
+
+      <h2>
+        Total:{' '}
+        {btns.reduce((acc, b) => {
+          return b.value + acc;
+        }, 0)}
+      </h2>
     </div>
   );
 }
